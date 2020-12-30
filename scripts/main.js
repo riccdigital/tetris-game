@@ -47,8 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const theShapes = [lShape, zShape, oShape, iShape]
 
     let currentPosition = 4
-    let current = theShapes[0][0]
+    let currentRotation = 0
+    //random selection in its first rotation*
+     let random = Math.floor(Math.random()*theShapes.length)
+    let current = theShapes[random][currentRotation]
 
+    //draw the shape
     function draw() {
         current.forEach(index => {
             squares[currentPosition+index].classList.add('shape')
