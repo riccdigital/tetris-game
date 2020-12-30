@@ -66,6 +66,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    //make shape move down every second
+
+    timerId = setInterval(moveDown, 1000);
+
+    //movedown funct
+    function moveDown() {
+        undraw();
+        currentPosition += width;
+        draw();
+
+    }
 
 
 
