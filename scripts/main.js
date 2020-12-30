@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.keyCode === 37) {
             moveLeft();
         } else if (e.keyCode === 38) {
-            //rotate()
+            rotate();
         }
          else if (e.keyCode === 39 ) {
             moveRight();
@@ -129,9 +129,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
             currentPosition -= 1;
         }
-        draw();
+        draw();    
 
-        
+    }
+
+    //rotate the shape
+    function rotate() {
+        undraw();
+        currentRotation++;
+        if (currentRotation === current.length) {
+            currentRotation = 0;
+        }
+        current = theShapes[random][currentRotation]
+        draw();
 
     }
 
