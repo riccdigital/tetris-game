@@ -9,6 +9,10 @@
 .grid div{
     height: 20px;
     width: 20px;
-    background-color: #D4076f;
+    /*background-color: #D4076f;*/
 
+}
+
+.shape{
+    background-color: #2a4ee1;
 }
