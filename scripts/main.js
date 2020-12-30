@@ -1,10 +1,10 @@
 //event listener to make script wait for html to finish loading
 document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.querySelector('.grid')
-    let squares = Array.from(document.querySelectorAll('.grid div'))
-    const width = 10
-    const scoreDisplay = document.querySelector('#score')
-    const startBtn = document.querySelector('#start-btn')
+    const grid = document.querySelector('.grid');
+    let squares = Array.from(document.querySelectorAll('.grid div'));
+    const width = 10;
+    const scoreDisplay = document.querySelector('#score');
+    const startBtn = document.querySelector('#start-btn');
 
     //The shapes
 
@@ -13,21 +13,21 @@ document.addEventListener('DOMContentLoaded', () => {
         [width, width + 1, width + 2, width * 2 + 2],
         [1, width + 1, width * 2 + 1, width * 2],
         [width, width * 2, width * 2 + 1, width * 2 + 2]
-    ]
+    ];
 
     const zShape = [
         [width + 1, width + 2, width * 2, width * 2 + 1],
         [0, width, width + 1, width * 2 + 1],
-        [ width + 1, width + 2, width * 2, width * 2 + 1],
+        [width + 1, width + 2, width * 2, width * 2 + 1],
         [0, width, width + 1, width * 2 + 1]
-    ]
+    ];
 
     const tShape = [
         [1, width, width + 1, width + 2],
         [1, width + 1, width + 2, width * 2 + 1],
         [width, width + 1, width + 2, width * 2 + 1],
         [1, width, width + 1, width * 2 + 1]
-    ]
+    ];
 
     const oShape = [
         [0, 1, width, width + 1],
@@ -35,34 +35,39 @@ document.addEventListener('DOMContentLoaded', () => {
         [0, 1, width, width + 1],
         [0, 1, width, width + 1]
 
-    ]
+    ];
 
     const iShape = [
         [1, width + 1, width * 2 + 1, width * 3 + 1],
         [width, width + 1, width + 2, width + 3],
         [1, width + 1, width * 2 + 1, width * 3 + 1],
         [width, width + 1, width + 2, width + 3]
-    ]
+    ];
 
-    const theShapes = [lShape, zShape, oShape, iShape]
+    const theShapes = [lShape, zShape, oShape, iShape];
 
-    let currentPosition = 4
-    let currentRotation = 0
+    let currentPosition = 4;
+    let currentRotation = 0;
     //random selection in its first rotation*
-     let random = Math.floor(Math.random()*theShapes.length)
-    let current = theShapes[random][currentRotation]
+    let random = Math.floor(Math.random() * theShapes.length);
+    let current = theShapes[random][currentRotation];
 
-    //draw the shape
+    //draw the Shape
     function draw() {
         current.forEach(index => {
-            squares[currentPosition+index].classList.add('shape')
-        })
+            squares[currentPosition + index].classList.add('shape');
+        });
     }
 
-    draw()
+    //undraw the Shape
+    function undraw() {
+        current.forEach(index => {
+            squares[currentPosition + index].classList.remove('shape');
+        });
+    }
 
 
 
 
 
-})
+});
