@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const width = 10;
     const scoreDisplay = document.querySelector('#score');
     const startBtn = document.querySelector('#start-btn');
+    let nextRandom = 0;
 
     //The shapes
 
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [width, width + 1, width + 2, width + 3]
     ];
 
-    const theShapes = [lShape, zShape, oShape, iShape];
+    const theShapes = [lShape, zShape,tShape, oShape, iShape];
 
     let currentPosition = 4;
     let currentRotation = 0;
@@ -101,10 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
             current.forEach(index => squares[currentPosition + index].classList.add('taken'));
 
             //start new Shape
-            random = Math.floor(Math.random() * theShapes.length);
+            random = nextRandom;
+            nextRandom = Math.floor(Math.random() * theShapes.length);
             current = theShapes[random][currentRotation];
             currentPosition = 4;
             draw();
+            displayShape();
          }
     }
 //edge blockage
@@ -144,6 +147,37 @@ document.addEventListener('DOMContentLoaded', () => {
         draw();
 
     } 
+    //Show Next Shape 
+    const dispalySquares = document.querySelectorAll('.mini-grid div'); 
+    const displayWidth = 4;
+    let displayIndex = 0;
+    
+
+    //The Shapes without rotations  
+    const upNextShapes = [
+        //lShape
+        [1, displayWidth + 1, displayWidth * 2 + 1, 2],
+        //zShape
+        [displayWidth + 1, displayWidth + 2, displayWidth * 2, displayWidth * 2 + 1],
+        //tShape
+        [1, displayWidth + 1, displayWidth + 2, displayWidth * 2 + 1],
+        //oShape
+        [0, 1, displayWidth, displayWidth + 1],
+        //iShape
+        [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1]
+
+    ];
+
+    //display shape in mini grid function
+     //first clean grid
+    function displayShape() {
+        dispalySquares.forEach(square => {
+            square.classList.remove('shape');
+        });
+        upNextShapes[nextRandom].forEach(index => {
+            dispalySquares[displayIndex + index].classList.add('shape');
+        });
+    }
 
 
 });
