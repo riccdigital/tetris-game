@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
         current = theShapes[random][currentRotation];
         draw();
 
-    }
+    } 
 
 
 });
