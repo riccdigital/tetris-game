@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreDisplay = document.querySelector('#score');
     const startBtn = document.querySelector('#start-btn');
     let nextRandom = 0;
+    let timerId;
+    let score = 0;
 
     //The shapes
 
@@ -45,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [width, width + 1, width + 2, width + 3]
     ];
 
-    const theShapes = [lShape, zShape,tShape, oShape, iShape];
+    const theShapes = [lShape, zShape, tShape, oShape, iShape];
 
     let currentPosition = 4;
     let currentRotation = 0;
@@ -69,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //make shape move down every second
 
-    timerId = setInterval(moveDown, 1000);
+    //timerId = setInterval(moveDown, 1000);
     //keyCode functions
 
     function control(e) {
@@ -78,10 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (e.keyCode === 38) {
             rotate();
         }
-         else if (e.keyCode === 39 ) {
+        else if (e.keyCode === 39) {
             moveRight();
         }
-         else if (e.keyCode === 40) {
+        else if (e.keyCode === 40) {
             moveDown();
         }
     }
@@ -108,9 +110,11 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPosition = 4;
             draw();
             displayShape();
-         }
+            addScore();
+            gameOver();
+        }
     }
-//edge blockage
+    //edge blockage
     function moveLeft() {
         undraw();
         const isAtLeftEdge = current.some(index => (currentPosition + index) % width === 0);
@@ -132,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
             currentPosition -= 1;
         }
-        draw();    
+        draw();
 
     }
 
@@ -146,9 +150,9 @@ document.addEventListener('DOMContentLoaded', () => {
         current = theShapes[random][currentRotation];
         draw();
 
-    } 
+    }
     //Show Next Shape 
-    const dispalySquares = document.querySelectorAll('.mini-grid div'); 
+    const dispalySquares = document.querySelectorAll('.mini-grid div');
     const displayWidth = 4;
     let displayIndex = 0;
     
@@ -169,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     //display shape in mini grid function
-     //first clean grid
+    //first clean grid
     function displayShape() {
         dispalySquares.forEach(square => {
             square.classList.remove('shape');
@@ -178,6 +182,39 @@ document.addEventListener('DOMContentLoaded', () => {
             dispalySquares[displayIndex + index].classList.add('shape');
         });
     }
+    //add functionality to start btn
+    startBtn.addEventListener('click', () => {
+        if (timerId) {
+            clearInterval(timerId);
+            timerId = null;
+        } else {
+            draw();
+            timerId = setInterval(moveDown, 1000);
+            nextRandom = Math.floor(Math.random() * theShapes.length);
+            displayShape();
+        }
+             
+    });
+    //add score
+    function addScore() {
+        
+        for (let i = 0; i < 199; i += width){
+            const row = [i, i + 1, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7, i + 8, i + 9];
 
+            if (row.every(index  => squares[index].classList.contains('taken'))) {
+                score += 100;
+                scoreDisplay.innerHTML = score;
+                row.forEach(index => {
+                    squares[index].classList.remove('taken');
+                    squares[index].classList.remove('shape');
+                });
+                const squaresRemoved = squares.splice(i, width);
+                squares = squaresRemoved.concat(squares);
+                squares.forEach(cell => grid.appendChild(cell));
+            }
+        }
+    }
+
+    //gameOver
 
 });
